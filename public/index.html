@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Restaurant Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <div class="restaurant-icon">
+                🍽️
+            </div>
+
+            <h1>Restaurant Management System</h1>
+
+            <p class="subtitle">
+                Welcome! Select how you want to continue.
+            </p>
+
+            <div class="role-buttons">
+
+                <button class="role-button user-button"
+                        onclick="goToUser()">
+                    👤
+                    <span>Continue as User</span>
+                    <small>View menu & place orders</small>
+                </button>
+
+                <button class="role-button admin-button"
+                        onclick="goToAdmin()">
+                    👨‍💼
+                    <span>Continue as Admin</span>
+                    <small>Manage restaurant</small>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function goToUser() {
+            window.location.href = "/user.html";
+        }
+
+        function goToAdmin() {
+            window.location.href = "/admin.html";
+        }
+
+    </script>
+
+</body>
+
+</html>

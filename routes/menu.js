@@ -7,7 +7,9 @@ const db = require("../config/db");
 router.get("/", async (req, res) => {
     try {
         const [rows] = await db.query("SELECT * FROM menu_items");
+
         res.json(rows);
+
     } catch (error) {
         res.status(500).json({
             message: "Error fetching menu items",
@@ -26,7 +28,11 @@ router.post("/", async (req, res) => {
             VALUES (?, ?, ?)
         `;
 
-        const [result] = await db.query(sql, [name, price, category]);
+        const [result] = await db.query(sql, [
+            name,
+            price,
+            category
+        ]);
 
         res.status(201).json({
             message: "Menu item added successfully",
@@ -40,33 +46,7 @@ router.post("/", async (req, res) => {
         });
     }
 });
-// DELETE a menu item
-router.delete("/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
 
-        const [result] = await db.query(
-            "DELETE FROM menu_items WHERE id = ?",
-            [id]
-        );
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                message: "Menu item not found"
-            });
-        }
-
-        res.json({
-            message: "Menu item deleted successfully"
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            message: "Error deleting menu item",
-            error: error.message
-        });
-    }
-});
 // UPDATE a menu item
 router.put("/:id", async (req, res) => {
     try {
@@ -99,6 +79,34 @@ router.put("/:id", async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: "Error updating menu item",
+            error: error.message
+        });
+    }
+});
+
+// DELETE a menu item
+router.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const [result] = await db.query(
+            "DELETE FROM menu_items WHERE id = ?",
+            [id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "Menu item not found"
+            });
+        }
+
+        res.json({
+            message: "Menu item deleted successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error deleting menu item",
             error: error.message
         });
     }

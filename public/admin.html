@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Restaurant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="admin-header">
+
+        <div>
+            <h1>👨‍💼 Restaurant Admin</h1>
+            <p>Management Dashboard</p>
+        </div>
+
+        <button onclick="window.location.href='/'">
+            ← Home
+        </button>
+
+    </header>
+
+
+    <!-- ================= WELCOME ================= -->
+
+    <section class="admin-welcome">
+
+        <h2>Welcome, Admin 👋</h2>
+
+        <p>
+            Manage your restaurant from one place.
+        </p>
+
+    </section>
+
+
+    <!-- ================= DASHBOARD CARDS ================= -->
+
+    <section class="admin-dashboard">
+
+        <!-- ORDERS -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-icon">
+                📋
+            </div>
+
+            <h3>Orders</h3>
+
+            <p>
+                View and manage customer orders.
+            </p>
+
+            <button onclick="showSection('orders'); loadAdminOrders()">
+                View Orders
+            </button>
+
+        </div>
+
+
+        <!-- MENU -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-icon">
+                🍴
+            </div>
+
+            <h3>Menu</h3>
+
+            <p>
+                Manage restaurant food items.
+            </p>
+
+            <button onclick="showSection('menu'); loadAdminMenu()">
+                Manage Menu
+            </button>
+
+        </div>
+
+
+        <!-- INVENTORY -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-icon">
+                📦
+            </div>
+
+            <h3>Inventory</h3>
+
+            <p>
+                Monitor restaurant stock.
+            </p>
+
+            <button onclick="showSection('inventory'); loadAdminInventory()">
+                Manage Inventory
+            </button>
+
+        </div>
+
+
+        <!-- TABLES -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-icon">
+                🪑
+            </div>
+
+            <h3>Tables</h3>
+
+            <p>
+                View and manage restaurant tables.
+            </p>
+
+            <button onclick="showSection('tables'); loadAdminTables()">
+                Manage Tables
+            </button>
+
+        </div>
+
+
+        <!-- CUSTOMERS -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-icon">
+                👤
+            </div>
+
+            <h3>Customers</h3>
+
+            <p>
+                View registered customers.
+            </p>
+
+            <button onclick="showSection('customers'); loadAdminCustomers()">
+                View Customers
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ADMIN CONTENT ================= -->
+
+    <section class="admin-content">
+
+
+        <!-- DEFAULT MESSAGE -->
+
+        <div id="adminMessage">
+
+            <h2>
+                📊 Admin Dashboard
+            </h2>
+
+            <p>
+                Select a section above to manage your restaurant.
+            </p>
+
+        </div>
+
+
+        <!-- ================= ORDERS ================= -->
+
+        <div
+            id="orders"
+            class="admin-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <h2>
+                    📋 Customer Orders
+                </h2>
+
+                <button onclick="loadAdminOrders()">
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div id="ordersContainer">
+                Loading orders...
+            </div>
+
+        </div>
+
+
+        <!-- ================= MENU ================= -->
+
+        <div
+            id="menu"
+            class="admin-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <h2>
+                    🍴 Menu Management
+                </h2>
+
+                <button onclick="loadAdminMenu()">
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <!-- ADD MENU ITEM -->
+
+            <div class="admin-form">
+
+                <h3>
+                    ➕ Add Menu Item
+                </h3>
+
+                <input
+                    type="text"
+                    id="menuName"
+                    placeholder="Item name"
+                >
+
+                <input
+                    type="number"
+                    id="menuPrice"
+                    placeholder="Price"
+                >
+
+                <input
+                    type="text"
+                    id="menuCategory"
+                    placeholder="Category"
+                >
+
+                <button onclick="addMenuItem()">
+                    Add Item
+                </button>
+
+            </div>
+
+
+            <!-- MENU ITEMS -->
+
+            <div id="adminMenuContainer">
+                Loading menu...
+            </div>
+
+        </div>
+
+
+        <!-- ================= INVENTORY ================= -->
+
+        <div
+            id="inventory"
+            class="admin-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <h2>
+                    📦 Inventory Management
+                </h2>
+
+                <button onclick="loadAdminInventory()">
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div id="inventoryContainer">
+                Loading inventory...
+            </div>
+
+        </div>
+
+
+        <!-- ================= TABLES ================= -->
+
+        <div
+            id="tables"
+            class="admin-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <h2>
+                    🪑 Table Management
+                </h2>
+
+                <button onclick="loadAdminTables()">
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div id="adminTablesContainer">
+                Loading tables...
+            </div>
+
+        </div>
+
+
+        <!-- ================= CUSTOMERS ================= -->
+
+        <div
+            id="customers"
+            class="admin-section"
+            style="display:none;"
+        >
+
+            <div class="section-header">
+
+                <h2>
+                    👤 Customers
+                </h2>
+
+                <button onclick="loadAdminCustomers()">
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div id="customersContainer">
+                Loading customers...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            Restaurant Management System |
+            Node.js + Express.js + MySQL
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        // ==========================================
+        // SHOW SECTION
+        // ==========================================
+
+        function showSection(sectionName) {
+
+            const sections =
+                document.querySelectorAll(".admin-section");
+
+            sections.forEach(section => {
+                section.style.display = "none";
+            });
+
+            document.getElementById("adminMessage").style.display =
+                "none";
+
+            const selectedSection =
+                document.getElementById(sectionName);
+
+            if (selectedSection) {
+                selectedSection.style.display = "block";
+            }
+
+        }
+
+
+        // ==========================================
+        // LOAD ORDERS
+        // ==========================================
+
+        async function loadAdminOrders() {
+
+            const container =
+                document.getElementById("ordersContainer");
+
+            container.innerHTML =
+                "<p>Loading orders...</p>";
+
+            try {
+
+                const response =
+                    await fetch("/api/orders");
+
+                const orders =
+                    await response.json();
+
+                console.log("Orders received:", orders);
+
+                if (!response.ok) {
+
+                    container.innerHTML =
+                        "<p>Unable to load orders.</p>";
+
+                    return;
+                }
+
+                if (orders.length === 0) {
+
+                    container.innerHTML = `
+
+                        <div class="admin-order-card">
+
+                            <h3>📭 No Orders</h3>
+
+                            <p>
+                                No customer orders have been
+                                placed yet.
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+                }
+
+                let html = "";
+
+                orders.forEach(order => {
+
+                    html += `
+
+                        <div class="admin-order-card">
+
+                            <h3>
+                                📋 Order #${order.id}
+                            </h3>
+
+                            <p>
+                                <strong>Customer:</strong>
+                                ${order.customer_name || "N/A"}
+                            </p>
+
+                            <p>
+                                <strong>Food:</strong>
+                                ${order.item_name || "N/A"}
+                            </p>
+
+                            <p>
+                                <strong>Quantity:</strong>
+                                ${order.quantity || 0}
+                            </p>
+
+                            <p>
+                                <strong>Total:</strong>
+                                ₹${order.total_price || 0}
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+
+                                <span class="order-status">
+                                    ${order.status || "Pending"}
+                                </span>
+
+                            </p>
+
+                            <p>
+                                <strong>Created:</strong>
+                                ${order.created_at || "N/A"}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading orders:",
+                    error
+                );
+
+                container.innerHTML = `
+
+                    <div class="admin-order-card">
+
+                        <h3>❌ Error</h3>
+
+                        <p>
+                            Server error while loading orders.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOAD MENU
+        // ==========================================
+
+        async function loadAdminMenu() {
+
+            const container =
+                document.getElementById("adminMenuContainer");
+
+            container.innerHTML =
+                "<p>Loading menu...</p>";
+
+            try {
+
+                const response =
+                    await fetch("/api/menu");
+
+                const menu =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    container.innerHTML =
+                        "<p>Unable to load menu.</p>";
+
+                    return;
+                }
+
+                if (menu.length === 0) {
+
+                    container.innerHTML =
+                        "<p>No menu items found.</p>";
+
+                    return;
+                }
+
+                let html = "";
+
+                menu.forEach(item => {
+
+                    html += `
+
+                        <div class="admin-order-card">
+
+                            <h3>
+                                🍴 ${item.name}
+                            </h3>
+
+                            <p>
+                                <strong>Price:</strong>
+                                ₹${item.price}
+                            </p>
+
+                            <p>
+                                <strong>Category:</strong>
+                                ${item.category || "N/A"}
+                            </p>
+
+                            <p>
+                                <strong>Available:</strong>
+                                ${item.available ? "Yes" : "No"}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+
+                console.error(error);
+
+                container.innerHTML =
+                    "<p>Error loading menu.</p>";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // ADD MENU ITEM
+        // ==========================================
+
+        async function addMenuItem() {
+
+            const name =
+                document.getElementById("menuName").value.trim();
+
+            const price =
+                document.getElementById("menuPrice").value;
+
+            const category =
+                document.getElementById("menuCategory").value.trim();
+
+            if (!name || !price || !category) {
+
+                alert("Please fill all menu fields.");
+
+                return;
+            }
+
+            try {
+
+                const response = await fetch("/api/menu", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        name: name,
+
+                        price: Number(price),
+
+                        category: category
+
+                    })
+
+                });
+
+                const data =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    alert(
+                        data.message ||
+                        "Unable to add menu item."
+                    );
+
+                    return;
+                }
+
+                alert(
+                    "Menu item added successfully!"
+                );
+
+                document.getElementById("menuName").value = "";
+
+                document.getElementById("menuPrice").value = "";
+
+                document.getElementById("menuCategory").value = "";
+
+                loadAdminMenu();
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Server error while adding menu item."
+                );
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOAD INVENTORY
+        // ==========================================
+
+        async function loadAdminInventory() {
+
+            const container =
+                document.getElementById("inventoryContainer");
+
+            container.innerHTML =
+                "<p>Loading inventory...</p>";
+
+            try {
+
+                const response =
+                    await fetch("/api/inventory");
+
+                const inventory =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    container.innerHTML =
+                        "<p>Unable to load inventory.</p>";
+
+                    return;
+                }
+
+                if (inventory.length === 0) {
+
+                    container.innerHTML =
+                        "<p>No inventory items found.</p>";
+
+                    return;
+                }
+
+                let html = "";
+
+                inventory.forEach(item => {
+
+                    html += `
+
+                        <div class="admin-order-card">
+
+                            <h3>
+                                📦 ${item.item_name}
+                            </h3>
+
+                            <p>
+                                <strong>Quantity:</strong>
+                                ${item.quantity}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+
+                console.error(error);
+
+                container.innerHTML =
+                    "<p>Error loading inventory.</p>";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOAD TABLES
+        // ==========================================
+
+        async function loadAdminTables() {
+
+            const container =
+                document.getElementById("adminTablesContainer");
+
+            container.innerHTML =
+                "<p>Loading tables...</p>";
+
+            try {
+
+                const response =
+                    await fetch("/api/tables");
+
+                const tables =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    container.innerHTML =
+                        "<p>Unable to load tables.</p>";
+
+                    return;
+                }
+
+                if (tables.length === 0) {
+
+                    container.innerHTML =
+                        "<p>No tables found.</p>";
+
+                    return;
+                }
+
+                let html = "";
+
+                tables.forEach(table => {
+
+                    html += `
+
+                        <div class="admin-order-card">
+
+                            <h3>
+                                🪑 Table ${table.table_number}
+                            </h3>
+
+                            <p>
+                                <strong>Capacity:</strong>
+                                ${table.capacity}
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+                                ${table.status}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+
+                console.error(error);
+
+                container.innerHTML =
+                    "<p>Error loading tables.</p>";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOAD CUSTOMERS
+        // ==========================================
+
+        async function loadAdminCustomers() {
+
+            const container =
+                document.getElementById("customersContainer");
+
+            container.innerHTML =
+                "<p>Loading customers...</p>";
+
+            try {
+
+                const response =
+                    await fetch("/api/customers");
+
+                const customers =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    container.innerHTML =
+                        "<p>Unable to load customers.</p>";
+
+                    return;
+                }
+
+                if (customers.length === 0) {
+
+                    container.innerHTML =
+                        "<p>No customers found.</p>";
+
+                    return;
+                }
+
+                let html = "";
+
+                customers.forEach(customer => {
+
+                    html += `
+
+                        <div class="admin-order-card">
+
+                            <h3>
+                                👤 ${customer.name}
+                            </h3>
+
+                            <p>
+                                <strong>Phone:</strong>
+                                ${customer.phone || "N/A"}
+                            </p>
+
+                            <p>
+                                <strong>Email:</strong>
+                                ${customer.email || "N/A"}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+
+                console.error(error);
+
+                container.innerHTML =
+                    "<p>Error loading customers.</p>";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
